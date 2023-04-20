@@ -1,10 +1,10 @@
 <template>
-  <div></div>
+  <div>Catalog</div>
 </template>
 
 <script>
 export default {
-  name: 'AcvMainCatalog',
+  name: 'AcvCatalogList',
 };
 </script>
 

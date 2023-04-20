@@ -1,7 +1,7 @@
 <template>
   <div class="main-wrapper">
     <header-main></header-main>
-    <section></section>
+    <router-view class="router-wrapper"></router-view>
   </div>
 </template>
 
@@ -38,9 +38,16 @@ ul {
 </style>
 <style scoped>
 .main-wrapper {
-  display: flex;
+  display: grid;
   height: 100vh;
   width: 100vw;
-  flex-direction: column;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: 8rem repeat(8, 1fr);
+}
+.router-wrapper {
+  /* grid-area: 2 / 1 / end / end;
+  display: flex;
+  flex-direction: row;
+  justify-content: center; */
 }
 </style>

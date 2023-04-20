@@ -17,6 +17,7 @@ export default {
 <style></style>
 <style scoped>
 .header {
+  grid-area: 1 / 1 / 2 / end;
   display: flex;
   height: 8rem;
   background-color: #00b3a5;
