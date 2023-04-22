@@ -2,13 +2,20 @@
   <div class="brands-wrapper">
     <h2 @click="getCatalog" class="brands-label">Бренды</h2>
     <ul class="brands-filter_list">
-      <!-- <li>brand 1</li> -->
       <li
         class="brands-filter_item"
         v-for="value in this.catalog"
         :key="value.id"
       >
-        {{ value.title }}
+        <input
+          type="checkbox"
+          :name="value.id"
+          :id="value.id"
+          class="brands-filter_inp"
+        />
+        <label class="brands-filter_label" :for="value.id">{{
+          value.title
+        }}</label>
       </li>
     </ul>
     <button class="btn btn-get">Применить</button>
@@ -23,7 +30,6 @@
 </template>
 
 <script>
-// import axios from 'axios';
 import brands from '@/assets/json/brands.json';
 
 export default {
@@ -36,39 +42,9 @@ export default {
     };
   },
 
-  methods: {
-    // getDataProducts() {},
-    // handleMouseOver() {
-    //   console.log('mouse v3');
-    // },
-    // add() {
-    //   if (this.ticker.length === 0) {
-    //     return;
-    //   }
-    //   this.$emit('add-ticker', this.ticker);
-    //   this.ticker = '';
-    // },
-    // getCatalog() {
-    //   console.log(this.catalog);
-    //   // fetch('@/assets/json/brands.json')
-    //   //   .then((response) => response.json())
-    //   //   .then((catalog) => {
-    //   //     console.log(catalog);
-    //   //   });
-    //   // console.log(this.catalog);
-    // },
-  },
+  methods: {},
   created() {
     this.catalog = [...brands];
-    // let items = [...brands];
-    // console.log(...brands);
-
-    //   fetch('../src/assets/json/brands.json')
-    //     .then((response) => response.json())
-    //     .then((catalog) => {
-    //       this.catalog = catalog;
-    //     });
-    //   // console.log(this.catalog);
   },
 };
 </script>
@@ -79,7 +55,7 @@ export default {
 .brands-wrapper {
   height: 100%;
   width: 20rem;
-  background: greenyellow;
+  /* background: greenyellow; */
 }
 
 .brands-label {
@@ -88,28 +64,53 @@ export default {
   font-weight: 600;
 }
 .brands-filter_list {
-  padding-left: 2rem;
+  padding-left: 0;
+  margin-bottom: 3rem;
 }
 .brands-filter_item {
   list-style-type: none;
   font-size: 1.5rem;
   padding: 5px 0;
-  position: relative;
+  gap: 5px;
+  display: flex;
   cursor: pointer;
 }
-.brands-filter_item::before {
+.brands-filter_label::before {
   width: 12px;
   height: 12px;
   border: 1px solid #00b3a5;
   position: absolute;
-  left: -18px;
-  top: 0.7rem;
+  left: -21px;
+  top: 3px;
   content: '';
   cursor: pointer;
 }
+.brands-filter_inp:checked ~ .brands-filter_label::after {
+  content: url('@/assets/icons/filters_icon.svg');
+  stroke: red;
+  position: absolute;
+  left: -22px;
+  top: 1px;
+}
+
+/* .brands-filter_inp:checked ~ .brands-filter_label::before {
+} */
+.brands-filter_label {
+  position: relative;
+}
+
+.brands-filter_inp {
+  /* background-color: transparent;
+  border: 1px solid transparent; */
+  opacity: 0;
+  margin-left: 0;
+  position: relative;
+}
+.brands-filter_inp {
+}
 .btn {
-  width: 170px;
-  height: 4rem;
+  width: 175px;
+  height: 45px;
   border-radius: 15px;
   box-sizing: border-box;
   border: 1px solid #00b3a5;
