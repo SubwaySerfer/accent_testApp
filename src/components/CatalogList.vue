@@ -1,28 +1,18 @@
 <template>
   <div>
     <ul class="catalog-list">
-      <!-- <li class="list-item">
-        <img class="list-item_img" src="@/assets/images/1.png" alt="img" />
-        <h5 class="list-item_info">Product 1</h5>
-        <h5 class="list-item_info">brand: 9</h5>
-        <h6 class="list-item_info_price">Цена: 27.12 USD</h6>
-      </li> -->
-
-      <!-- <li class="list-item" v-for="value in this.list" :key="value.id"> -->
       <li class="list-item" v-for="value in currentList" :key="value.id">
-        <!-- <img v-bind:src="value.image" alt="" /> -->
         <img class="list-item_img" :src="value.image" alt="product image" />
-        <!-- {{ value }} -->
-        <!-- {{ value.image }} -->
-        <!-- <img v:src="require('@/assets/${value.image}')" /> -->
-        <!-- <img class="list-item_img" src="@/assets/images/1.png" alt="img" />-->
         <h5 class="list-item_info">{{ value.title }}</h5>
         <h5 class="list-item_info">brand: {{ value.brand }}</h5>
         <h6 class="list-item_info_price">
           Цена: {{ value.regular_price.value }}
           {{ value.regular_price.currency }}
         </h6>
-        <button class="list-item_btn btn">Добавить</button>
+
+        <button @click="addItem" :name="value.id" class="list-item_btn btn">
+          Добавить
+        </button>
       </li>
     </ul>
   </div>
@@ -30,6 +20,7 @@
 
 <script>
 import catalogList from '@/assets/json/products.json';
+import store from '@/store';
 
 export default {
   name: 'AcvCatalogList',
@@ -40,13 +31,26 @@ export default {
       currentList: [],
     };
   },
-  methods: {},
+  methods: {
+    addItem() {
+      // console.log(event.target.name);
+      // console.log({{$stote.state.basketItems}});
+      // event.target.name;
+      this.$store.state.basketItems[event.target.name][1]++;
+      this.$store.state.counterItems += 1;
+      // $state.store.basketItems;
+    },
+  },
   created() {
     this.list = [...catalogList];
     // this.list.forEach((el) => console.log(el));
     this.currentList = [...this.list.slice(0, 6)];
     // console.log('...', this.currentList);
     // console.log(this.list.slice(0, 6));
+    // this.list.forEach((el) => console.log(el));
+    this.list.forEach((el) => {
+      store.state.basketItems.push([el.id, 0]);
+    });
   },
 };
 </script>
