@@ -26,5 +26,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  gap: 2rem;
+  padding-top: 2rem;
 }
 </style>

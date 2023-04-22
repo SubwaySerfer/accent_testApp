@@ -48,20 +48,20 @@ export default {
     //   this.$emit('add-ticker', this.ticker);
     //   this.ticker = '';
     // },
-    getCatalog() {
-      console.log(this.catalog);
-      // fetch('@/assets/json/brands.json')
-      //   .then((response) => response.json())
-      //   .then((catalog) => {
-      //     console.log(catalog);
-      //   });
-      // console.log(this.catalog);
-    },
+    // getCatalog() {
+    //   console.log(this.catalog);
+    //   // fetch('@/assets/json/brands.json')
+    //   //   .then((response) => response.json())
+    //   //   .then((catalog) => {
+    //   //     console.log(catalog);
+    //   //   });
+    //   // console.log(this.catalog);
+    // },
   },
   created() {
     this.catalog = [...brands];
     // let items = [...brands];
-    console.log(...brands);
+    // console.log(...brands);
 
     //   fetch('../src/assets/json/brands.json')
     //     .then((response) => response.json())
