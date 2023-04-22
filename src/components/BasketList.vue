@@ -8,6 +8,7 @@
         v-for="value in this.$store.state.basketItems"
         :key="value[0]"
       >
+        <!-- {{ value }} -->
         <img
           class="basket-card_img"
           :src="value[2]['image']"
@@ -23,13 +24,30 @@
           {{ value[2].regular_price.currency }}
         </h6>
         <div class="basket-card_count">
-          <input class="basket-card_count_inp" type="text" :value="value[1]" />
+          <input
+            class="basket-card_count_inp"
+            type="text"
+            :id="value[2].id"
+            :value="value[1]"
+          />
           <label>Кол-во</label>
         </div>
-        <div><button>plus</button><button>min</button></div>
-        <!-- {{ value }} -->
-        <!-- {{ value[2] }}
-        {{ value[2]['image'] }} -->
+        <div class="basket-card_btns">
+          <button
+            class="basket-card_btns_add btn"
+            :name="value[2].id"
+            @click="addItem"
+          >
+            добавить
+          </button>
+          <button
+            class="basket-card_btns_del btn"
+            :name="value[2].id"
+            @click="delItem"
+          >
+            удалить
+          </button>
+        </div>
       </li>
     </ul>
   </section>
@@ -46,7 +64,20 @@ export default {
       catalog: [],
     };
   },
-  methods: {},
+  methods: {
+    addItem() {
+      // console.log(event.target.name);
+
+      console.log(this.$store.state.basketItems[event.target.name - 1]);
+      this.$store.state.basketItems[event.target.name - 1][1]++;
+      this.$store.state.counterItems++;
+    },
+    delItem() {
+      this.$store.state.basketItems[event.target.name - 1][1]--;
+      this.$store.state.counterItems--;
+      //TODO: добавить отслеживание общего и каждого подсчета, чтобы не уходил за ноль.
+    },
+  },
   created() {
     this.$store.state.basketItems = this.$store.state.basketItems.filter(
       (el) => el[1] != 0
@@ -102,5 +133,27 @@ export default {
 }
 .basket-card_count_inp {
   width: 40px;
+}
+
+.basket-card_btns {
+  display: flex;
+  flex-direction: column;
+  width: 8rem;
+  gap: 1rem;
+}
+.basket-card_btns_add {
+  background-color: #55cd5f;
+  border: 1px solid #55cd5f;
+  border-radius: 10px;
+  font-weight: 600;
+}
+.basket-card_btns_del {
+  background-color: #e93758;
+  border: 1px solid #e93758;
+  border-radius: 10px;
+  font-weight: 600;
+}
+.btn {
+  height: 2.5rem;
 }
 </style>

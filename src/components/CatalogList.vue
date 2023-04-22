@@ -33,12 +33,10 @@ export default {
   },
   methods: {
     addItem() {
-      this.$store.state.basketItems[event.target.name][1]++;
-      // console.log(event.target);
-      // console.log(this.currentList[1].id);
+      this.$store.state.basketItems[event.target.name - 1][1]++;
+      console.log(event.target);
 
-      // console.log(this.currentList.find((el) => el.id == event.target.name));
-      this.$store.state.basketItems[event.target.name][2] =
+      this.$store.state.basketItems[event.target.name - 1][2] =
         this.currentList.find((el) => el.id == event.target.name);
       this.$store.state.counterItems += 1;
     },
