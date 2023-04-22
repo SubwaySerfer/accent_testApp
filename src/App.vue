@@ -38,6 +38,9 @@ h6,
 ul {
   margin: 0;
 }
+.btn {
+  cursor: pointer;
+}
 </style>
 <style scoped>
 .main-wrapper {
