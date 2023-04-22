@@ -4,11 +4,15 @@
       <h3 class="header-counter_label">Товаров:</h3>
       <span class="header-counter_number">0</span>
     </div>
-    <img class="icon" src="../assets/icons/basket_icon.svg" />
+    <router-link to="/basket"
+      ><img class="icon" src="../assets/icons/basket_icon.svg" onclick=""
+    /></router-link>
   </header>
 </template>
 
 <script>
+import '@/router/index';
+
 export default {
   name: 'AcvHeaderMain',
 };
@@ -28,6 +32,7 @@ export default {
 }
 .icon {
   width: 3rem;
+  cursor: pointer;
 }
 .header-counter {
   font-size: 1.6rem;

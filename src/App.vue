@@ -49,11 +49,14 @@ ul {
   width: 100vw;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: 8rem repeat(8, 1fr);
+  /* justify-content: center; */
 }
-.router-wrapper {
-  /* grid-area: 2 / 1 / end / end;
+/* .router-wrapper {
+  grid-area: 2 / 1 / end / end;
   display: flex;
   flex-direction: row;
-  justify-content: center; */
-}
+  max-width: 1280px;
+  margin: 0 auto;
+  justify-content: center;
+} */
 </style>
