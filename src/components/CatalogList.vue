@@ -33,12 +33,14 @@ export default {
   },
   methods: {
     addItem() {
-      // console.log(event.target.name);
-      // console.log({{$stote.state.basketItems}});
-      // event.target.name;
       this.$store.state.basketItems[event.target.name][1]++;
+      // console.log(event.target);
+      // console.log(this.currentList[1].id);
+
+      // console.log(this.currentList.find((el) => el.id == event.target.name));
+      this.$store.state.basketItems[event.target.name][2] =
+        this.currentList.find((el) => el.id == event.target.name);
       this.$store.state.counterItems += 1;
-      // $state.store.basketItems;
     },
   },
   created() {

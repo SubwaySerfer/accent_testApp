@@ -106,8 +106,6 @@ export default {
   margin-left: 0;
   position: relative;
 }
-.brands-filter_inp {
-}
 .btn {
   width: 175px;
   height: 45px;
