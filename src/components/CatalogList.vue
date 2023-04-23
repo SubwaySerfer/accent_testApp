@@ -1,20 +1,38 @@
 <template>
-  <div>
-    <ul class="catalog-list">
-      <li class="list-item" v-for="value in currentList" :key="value.id">
-        <img class="list-item_img" :src="value.image" alt="product image" />
-        <h5 class="list-item_info">{{ value.title }}</h5>
-        <h5 class="list-item_info">brand: {{ value.brand }}</h5>
-        <h6 class="list-item_info_price">
-          Цена: {{ value.regular_price.value }}
-          {{ value.regular_price.currency }}
-        </h6>
-        <button @click="addItem" :name="value.id" class="list-item_btn btn">
-          Добавить
-        </button>
-      </li>
-    </ul>
-  </div>
+  <section class="wrapper">
+    <div class="catalog-wrapper">
+      <div class="">
+        <img
+          src="@/assets/icons/left-icon.svg"
+          alt="left arrow"
+          class="catalog-wrapper-arrow_left"
+          @click="prevPage"
+        />
+      </div>
+      <ul class="catalog-list">
+        <li class="list-item" v-for="value in currentList" :key="value.id">
+          <img class="list-item_img" :src="value.image" alt="product image" />
+          <h5 class="list-item_info">{{ value.title }}</h5>
+          <h5 class="list-item_info">brand: {{ value.brand }}</h5>
+          <h6 class="list-item_info_price">
+            Цена: {{ value.regular_price.value }}
+            {{ value.regular_price.currency }}
+          </h6>
+          <button @click="addItem" :name="value.id" class="list-item_btn btn">
+            Добавить
+          </button>
+        </li>
+      </ul>
+      <div>
+        <img
+          src="@/assets/icons/right-icon.svg"
+          alt="right arrow"
+          class="catalog-wrapper-arrow_right"
+          @click="nextPage"
+        />
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -70,6 +88,9 @@ export default {
       });
       this.$store.state.counterItems = sum;
     },
+
+    nextPage() {},
+    prevPage() {},
   },
 
   created() {
@@ -84,6 +105,16 @@ export default {
 
 <style></style>
 <style scoped>
+.wrapper {
+  display: flex;
+  align-items: flex-start;
+}
+.catalog-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
 .catalog-list {
   display: flex;
   gap: 2rem;
@@ -124,5 +155,11 @@ export default {
   width: auto;
   border: 1px solid #00b3a5;
   background-color: #75d5ce;
+}
+.catalog-wrapper-arrow_left,
+.catalog-wrapper-arrow_right {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
 }
 </style>
