@@ -143,6 +143,7 @@ export default {
   width: auto;
   flex: 1 0;
   gap: 2rem;
+  /* overflow: scroll; */
 }
 .basket-card {
   width: 100%;

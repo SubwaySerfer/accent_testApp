@@ -49,6 +49,7 @@ ul {
   width: 100vw;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: 8rem repeat(8, 1fr);
+  overflow: hidden;
   /* justify-content: center; */
 }
 /* .router-wrapper {

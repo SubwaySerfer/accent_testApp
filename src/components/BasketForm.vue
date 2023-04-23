@@ -6,7 +6,8 @@
     </div>
     <form action="" class="basket-form">
       <label for="">Имя</label><input type="text" placeholder="Введите имя" />
-      <label for="">Телефон</label> <input type="tel" />
+      <label for="">Телефон</label>
+      <input type="tel" placeholder="+7(999)-999-99-99" v-model="phone" />
     </form>
     <button class="btn btn-pay"><span>Оформить заказ</span></button>
   </section>
@@ -15,6 +16,32 @@
 <script>
 export default {
   name: 'AcvBasketForm',
+
+  data() {
+    return {
+      phone: '',
+    };
+  },
+  watch: {
+    phone(value) {
+      this.validatePhone(value);
+    },
+  },
+  methods: {
+    validatePhone(value) {
+      //TODO: доделать валидатор форм
+      let testSymbols = /^[\d\+][\d\(\)\ -]{10,14}\d$/; // eslint-disable-line
+      if (testSymbols.test(value)) {
+        console.log(true);
+        // this.msg['email'] = '';
+        // this.disabled = [false, this.disabled[1]];
+      } else {
+        console.log(false);
+        // this.msg['email'] = 'Invalid Email Address';
+        // this.disabled = [true, this.disabled[1]];
+      }
+    },
+  },
 };
 </script>
 
@@ -25,10 +52,10 @@ export default {
   width: 22rem;
   flex-flow: column nowrap;
   justify-content: flex-start;
-  height: auto;
+  height: min-content;
   border: 1px solid black;
   gap: 2rem;
-  padding: 1rem;
+  padding: 2rem 1rem;
   border-radius: 5px;
 }
 .basket-form {
