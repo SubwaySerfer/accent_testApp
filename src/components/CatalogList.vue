@@ -10,17 +10,19 @@
         />
       </div>
       <ul class="catalog-list">
-        <li class="list-item" v-for="value in currentList" :key="value.id">
-          <img class="list-item_img" :src="value.image" alt="product image" />
-          <h5 class="list-item_info">{{ value.title }}</h5>
-          <h5 class="list-item_info">brand: {{ value.brand }}</h5>
-          <h6 class="list-item_info_price">
-            Цена: {{ value.regular_price.value }}
-            {{ value.regular_price.currency }}
-          </h6>
-          <button @click="addItem" :name="value.id" class="list-item_btn btn">
-            Добавить
-          </button>
+        <li class="list-container" v-for="value in currentList" :key="value.id">
+          <div class="list-item">
+            <img class="list-item_img" :src="value.image" alt="product image" />
+            <h5 class="list-item_info">{{ value.title }}</h5>
+            <h5 class="list-item_info">brand: {{ value.brand }}</h5>
+            <h6 class="list-item_info_price">
+              Цена: {{ value.regular_price.value }}
+              {{ value.regular_price.currency }}
+            </h6>
+            <button @click="addItem" :name="value.id" class="list-item_btn btn">
+              Добавить
+            </button>
+          </div>
         </li>
       </ul>
       <div>
@@ -89,16 +91,29 @@ export default {
       this.$store.state.counterItems = sum;
     },
 
-    nextPage() {},
-    prevPage() {},
+    nextPage() {
+      //TODO: при выставленных фильтрах нужно проработать перемотку
+      if (this.currentList.length == 6) {
+        this.currentList = [...this.list.slice(6)];
+      } else {
+        this.$store.state.filteredItems = [];
+        this.currentList = [...this.list.slice(0, 6)];
+      }
+    },
+    prevPage() {
+      this.currentList = [...this.list.slice(0, 6)];
+      this.$store.state.filteredItems = [];
+    },
   },
 
   created() {
     this.list = [...catalogList];
     this.currentList = [...this.list.slice(0, 6)];
-    this.list.forEach((el) => {
-      store.state.basketItems.push([el.id, 0]);
-    });
+    if (this.$store.state.basketItems.length == 0) {
+      this.list.forEach((el) => {
+        store.state.basketItems.push([el.id, 0]);
+      });
+    }
   },
 };
 </script>
@@ -117,20 +132,29 @@ export default {
 }
 .catalog-list {
   display: flex;
-  gap: 2rem;
+  row-gap: 3.5rem;
   flex-flow: row wrap;
   width: 50vw;
   padding: 0;
+  height: 65vh;
+}
+
+.list-container {
+  flex: 1 0 33%;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .list-item {
-  width: auto;
+  width: 150px;
   height: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   border: 1px solid black;
-  flex: 1 0 25%;
+
   gap: 5px;
   box-sizing: border-box;
   padding: 1rem 2rem;
@@ -145,7 +169,7 @@ export default {
   white-space: nowrap;
 }
 .list-item_info_price {
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   font-weight: 600;
   white-space: nowrap;
 }

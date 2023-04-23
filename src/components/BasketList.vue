@@ -1,8 +1,5 @@
 <template>
   <section class="list-wrapper">
-    <!-- <p v-text="$store.state.basketItems"></p>
-    <p v-text="$store.state.counterItems"></p> -->
-    <!-- v-for="value in this.$store.state.basketItems" -->
     <ul class="basket-items">
       <li class="basket-card" v-for="value in this.currentArr" :key="value[0]">
         <!-- {{ value }} -->
@@ -96,10 +93,12 @@ export default {
       this.$store.state.totalPrice = priceSum;
     },
     addItem() {
+      console.log(
+        this.$store.state.basketItems[event.target.name - 1][2].regular_price
+      );
       this.$store.state.basketItems[event.target.name - 1][1]++;
-
-      this.$store.state.totalPrice +=
-        this.currentArr[event.target.name - 1][2].regular_price.value;
+      // this.$store.state.totalPrice +=
+      //   this.currentArr[event.target.name - 1][2].regular_price.value;
 
       this.refreshArray();
       this.checkCounter();
@@ -108,8 +107,8 @@ export default {
     delItem() {
       if (this.$store.state.basketItems[event.target.name - 1][1] > 0) {
         this.$store.state.basketItems[event.target.name - 1][1]--;
-        this.$store.state.totalPrice -=
-          this.currentArr[event.target.name - 1][2].regular_price.value;
+        // this.$store.state.totalPrice -=
+        //   this.currentArr[event.target.name - 1][2].regular_price.value;
         this.refreshArray();
         this.checkCounter();
         this.checkPrice();

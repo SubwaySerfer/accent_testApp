@@ -43,11 +43,16 @@ export default {
       currentFilters: [],
     };
   },
+  watch: {
+    '$store.state.filteredItems': function () {
+      if (this.$store.state.filteredItems.length == 0) {
+        this.currentFilters = [];
+      }
+    },
+  },
 
   methods: {
     useFilters() {
-      // console.log(brands);
-      // console.log(this.currentFilters);
       this.$store.state.filteredItems = [...this.currentFilters];
     },
     delFilters() {
@@ -58,12 +63,6 @@ export default {
   created() {
     this.catalog = [...brands];
   },
-  // watch(){
-  //  ()=>{useFilter{
-  //     console.log(event);
-  //     console.log(this.currentFilters);
-  //   }}
-  // }
 };
 </script>
 
@@ -73,7 +72,6 @@ export default {
 .brands-wrapper {
   height: 100%;
   width: 20rem;
-  /* background: greenyellow; */
 }
 
 .brands-label {
@@ -110,16 +108,12 @@ export default {
   top: 1px;
 }
 
-/* .brands-filter_inp:checked ~ .brands-filter_label::before {
-} */
 .brands-filter_label {
   position: relative;
   cursor: pointer;
 }
 
 .brands-filter_inp {
-  /* background-color: transparent;
-  border: 1px solid transparent; */
   opacity: 0;
   margin-left: 0;
   position: relative;
