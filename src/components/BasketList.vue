@@ -21,11 +21,18 @@
           {{ value[2].regular_price.currency }}
         </h6>
         <div class="basket-card_count">
-          <input
+          <!-- <input
             class="basket-card_count_inp"
-            type="text"
+            type="number"
             :id="value[2].id"
             :value="value[1]"
+          /> -->
+          <input
+            class="basket-card_count_inp"
+            type="number"
+            :id="value[2].id"
+            :value="value[1]"
+            @input="changeCount"
           />
           <label>Кол-во</label>
         </div>
@@ -64,13 +71,21 @@ export default {
       // price: this.$store.state.basketItems[event.target.name - 1],
     };
   },
-  // watch: {
-  //   totalPrice(newTotal, oldTotal) {
-  //     console.log('total', newTotal, oldTotal);
-  //     console.log(this.$store.state.totalPrice);
-  //   },
-  // },
+  watch: {
+    // totalPrice(newTotal, oldTotal) {
+    //   console.log('total', newTotal, oldTotal);
+    //   console.log(this.$store.state.totalPrice);
+    // },
+    // changeCount(newValue) {
+    //   console.log(newValue);
+    // },
+  },
   methods: {
+    changeCount(newValue) {
+      console.log(newValue);
+      this.$store.state.basketItems[event.target.id - 1][1] =
+        event.target.value;
+    },
     refreshArray() {
       this.$store.state.basketItems.forEach((el, idx) => {
         if (el.length > 2) {
@@ -116,7 +131,7 @@ export default {
       this.refreshArray();
     },
     delItem() {
-      console.log(this.$store.state.basketItems);
+      // console.log(this.$store.state.basketItems);
       // проверка, чтобы было кол-во больше 0
       // if (this.$store.state.basketItems[event.target.name - 1][1] > 0) {
       //   this.$store.state.basketItems[event.target.name - 1][1]--;
