@@ -2,7 +2,10 @@
   <header class="header">
     <div class="header-counter">
       <h3 class="header-counter_label">Товаров:</h3>
-      <span class="header-counter_number">{{ $store.state.counterItems }}</span>
+      <span
+        class="header-counter_number"
+        v-text="this.$store.state.counterItems"
+      ></span>
     </div>
     <router-link to="/basket"
       ><img class="icon" src="../assets/icons/basket_icon.svg" onclick=""
@@ -15,6 +18,10 @@ import '@/router/index';
 
 export default {
   name: 'AcvHeaderMain',
+
+  data() {
+    return {};
+  },
 };
 </script>
 

@@ -21,18 +21,13 @@
           {{ value[2].regular_price.currency }}
         </h6>
         <div class="basket-card_count">
-          <!-- <input
-            class="basket-card_count_inp"
-            type="number"
-            :id="value[2].id"
-            :value="value[1]"
-          /> -->
           <input
             class="basket-card_count_inp"
             type="number"
             :id="value[2].id"
             :value="value[1]"
             @input="changeCount"
+            placeholder="0"
           />
           <label>Кол-во</label>
         </div>
@@ -51,7 +46,6 @@
           >
             удалить
           </button>
-          <!-- {{ value }} -->
         </div>
       </li>
     </ul>
@@ -68,85 +62,57 @@ export default {
     return {
       catalog: [],
       currentArr: [],
-      // price: this.$store.state.basketItems[event.target.name - 1],
     };
   },
-  watch: {
-    // totalPrice(newTotal, oldTotal) {
-    //   console.log('total', newTotal, oldTotal);
-    //   console.log(this.$store.state.totalPrice);
-    // },
-    // changeCount(newValue) {
-    //   console.log(newValue);
-    // },
-  },
   methods: {
-    changeCount(newValue) {
-      console.log(newValue);
+    changeCount() {
       this.$store.state.basketItems[event.target.id - 1][1] =
         event.target.value;
+      this.checkPrice();
+      this.checkCounter();
     },
     refreshArray() {
       this.$store.state.basketItems.forEach((el, idx) => {
         if (el.length > 2) {
-          // this.currentArr.push(el);
-
           this.currentArr.find((elem) => elem[2].id == el[2].id)[1] =
             this.$store.state.basketItems[idx][1];
-          // console.log(this.$store.state.basketItems[idx][1]);
-          // console.log(this.currentArr);
-          // console.log('ssss', this.currentArr);
-          // console.log(this.currentArr);
-          // console.log(
-          //   this.currentArr.find((el) => {
-          //     el[2].id == '2';
-          //   })
-          // );
-          // console.log(
-          //   this.currentArr.filter((elem) => {
-          //     elem[2].id == el[2].id;
-          //   })
-          // );
         }
       });
     },
+    checkCounter() {
+      let sum = 0;
+      this.$store.state.basketItems.forEach((el) => {
+        sum += +el[1];
+      });
+      this.$store.state.counterItems = sum;
+    },
+    checkPrice() {
+      let priceSum = 0;
+      this.$store.state.basketItems.forEach((el) => {
+        if (el.length > 2) {
+          priceSum += el[1] * el[2].regular_price.value;
+        }
+      });
+      this.$store.state.totalPrice = priceSum;
+    },
     addItem() {
-      // console.log(event.target.name);
-
-      // console.log(this.$store.state.basketItems[event.target.name - 1]);
-      // this.$store.state.basketItems[event.target.name - 1][1]++;
-      // this.$store.state.basketItems[event.target.name][1]++;
-      // this.$store.state.counterItems++;
-      // this.$store.state.totalPrice +=
-      //   this.$store.state.basketItems[event.target.name][2].regular_price.value;
       this.$store.state.basketItems[event.target.name - 1][1]++;
-      this.$store.state.counterItems++;
+
       this.$store.state.totalPrice +=
         this.currentArr[event.target.name - 1][2].regular_price.value;
-      // console.log(
-      //   'add',
-      //   this.$store.state.basketItems[event.target.name],
-      //   event.target.name
-      // );
+
       this.refreshArray();
+      this.checkCounter();
+      this.checkPrice();
     },
     delItem() {
-      // console.log(this.$store.state.basketItems);
-      // проверка, чтобы было кол-во больше 0
-      // if (this.$store.state.basketItems[event.target.name - 1][1] > 0) {
-      //   this.$store.state.basketItems[event.target.name - 1][1]--;
-      //   this.$store.state.counterItems--;
-      //   this.$store.state.totalPrice -=
-      //     this.$store.state.basketItems[
-      //       event.target.name - 1
-      //     ][2].regular_price.value;
-      // }
       if (this.$store.state.basketItems[event.target.name - 1][1] > 0) {
         this.$store.state.basketItems[event.target.name - 1][1]--;
-        this.$store.state.counterItems--;
         this.$store.state.totalPrice -=
           this.currentArr[event.target.name - 1][2].regular_price.value;
         this.refreshArray();
+        this.checkCounter();
+        this.checkPrice();
       }
     },
   },
@@ -157,7 +123,7 @@ export default {
         this.currentArr.push(el);
       }
     });
-    // console.log(this.currentArr);
+    this.checkPrice();
     // this.$store.state.basketItems = this.$store.state.basketItems.filter(
     //   (el) => el[1] != 0
     // );

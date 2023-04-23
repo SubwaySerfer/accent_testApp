@@ -35,24 +35,28 @@ export default {
     // действует добавление, после перехода, уже фильтруется массив
     addItem() {
       this.$store.state.basketItems[event.target.name - 1][1]++;
-      // console.log(event.target);
 
       this.$store.state.basketItems[event.target.name - 1][2] =
         this.currentList.find((el) => el.id == event.target.name);
-      this.$store.state.counterItems += 1;
-      this.$store.state.totalPrice +=
-        this.$store.state.basketItems[
-          event.target.name - 1
-        ][2].regular_price.value;
+      // this.$store.state.counterItems += 1;
+      // this.$store.state.totalPrice +=
+      //   this.$store.state.basketItems[
+      //     event.target.name - 1
+      //   ][2].regular_price.value;
+      this.checkCounter();
+    },
+    //TODO: сделать функцию глобальной есть повтор
+    checkCounter() {
+      let sum = 0;
+      this.$store.state.basketItems.forEach((el) => {
+        sum += el[1];
+      });
+      this.$store.state.counterItems = sum;
     },
   },
   created() {
     this.list = [...catalogList];
-    // this.list.forEach((el) => console.log(el));
     this.currentList = [...this.list.slice(0, 6)];
-    // console.log('...', this.currentList);
-    // console.log(this.list.slice(0, 6));
-    // this.list.forEach((el) => console.log(el));
     this.list.forEach((el) => {
       store.state.basketItems.push([el.id, 0]);
     });
