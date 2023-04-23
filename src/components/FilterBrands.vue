@@ -48,10 +48,11 @@ export default {
     useFilters() {
       // console.log(brands);
       // console.log(this.currentFilters);
-      this.$store.state.filteredItems = this.currentFilters;
+      this.$store.state.filteredItems = [...this.currentFilters];
     },
     delFilters() {
       this.currentFilters = [];
+      this.$store.state.filteredItems = [];
     },
   },
   created() {

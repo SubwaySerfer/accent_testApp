@@ -9,7 +9,6 @@
           Цена: {{ value.regular_price.value }}
           {{ value.regular_price.currency }}
         </h6>
-        {{ currentFilters }}
         <button @click="addItem" :name="value.id" class="list-item_btn btn">
           Добавить
         </button>
@@ -30,6 +29,7 @@ export default {
       list: [],
       currentList: [],
       currentFilters: [],
+      otherItems: [],
     };
   },
   computed: {
@@ -39,12 +39,17 @@ export default {
   },
   watch: {
     '$store.state.filteredItems': function () {
-      this.currentFilters = [...this.$store.state.filteredItems];
       this.currentList = [];
-
-      this.currentFilters.forEach((el) => {
-        this.currentList.push(this.list.find((elem) => elem.brand == el));
-      });
+      this.otherItems = [];
+      if (this.$store.state.filteredItems.length != 0) {
+        this.currentFilters = [...this.$store.state.filteredItems];
+        this.currentFilters.forEach((el) => {
+          this.otherItems.push(this.list.find((elem) => elem.brand == el));
+        });
+        this.currentList = this.otherItems.slice(0, 6);
+      } else {
+        this.currentList = [...this.list.slice(0, 6)];
+      }
     },
   },
   methods: {
