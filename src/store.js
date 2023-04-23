@@ -5,6 +5,7 @@ const store = createStore({
     return {
       basketItems: [],
       counterItems: 0,
+      totalPrice: Math.floor(0),
     };
   },
 });

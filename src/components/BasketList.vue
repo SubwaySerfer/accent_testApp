@@ -2,12 +2,9 @@
   <section class="list-wrapper">
     <!-- <p v-text="$store.state.basketItems"></p>
     <p v-text="$store.state.counterItems"></p> -->
+    <!-- v-for="value in this.$store.state.basketItems" -->
     <ul class="basket-items">
-      <li
-        class="basket-card"
-        v-for="value in this.$store.state.basketItems"
-        :key="value[0]"
-      >
+      <li class="basket-card" v-for="value in this.currentArr" :key="value[0]">
         <!-- {{ value }} -->
         <img
           class="basket-card_img"
@@ -47,6 +44,7 @@
           >
             удалить
           </button>
+          {{ value }}
         </div>
       </li>
     </ul>
@@ -62,6 +60,8 @@ export default {
   data() {
     return {
       catalog: [],
+      currentArr: [],
+      // price: this.$store.state.basketItems[event.target.name - 1],
     };
   },
   methods: {
@@ -69,19 +69,47 @@ export default {
       // console.log(event.target.name);
 
       console.log(this.$store.state.basketItems[event.target.name - 1]);
-      this.$store.state.basketItems[event.target.name - 1][1]++;
+      // this.$store.state.basketItems[event.target.name - 1][1]++;
+      // this.$store.state.basketItems[event.target.name][1]++;
+      // this.$store.state.counterItems++;
+      // this.$store.state.totalPrice +=
+      //   this.$store.state.basketItems[event.target.name][2].regular_price.value;
+      this.$store.state.basketItems[event.target.name][1]++;
       this.$store.state.counterItems++;
+      this.$store.state.totalPrice +=
+        this.currentArr[event.target.name][2].regular_price.value;
     },
     delItem() {
-      this.$store.state.basketItems[event.target.name - 1][1]--;
-      this.$store.state.counterItems--;
-      //TODO: добавить отслеживание общего и каждого подсчета, чтобы не уходил за ноль.
+      console.log(this.$store.state.basketItems);
+      // проверка, чтобы было кол-во больше 0
+      // if (this.$store.state.basketItems[event.target.name - 1][1] > 0) {
+      //   this.$store.state.basketItems[event.target.name - 1][1]--;
+      //   this.$store.state.counterItems--;
+      //   this.$store.state.totalPrice -=
+      //     this.$store.state.basketItems[
+      //       event.target.name - 1
+      //     ][2].regular_price.value;
+      // }
+      if (this.$store.state.basketItems[event.target.name][1] > 0) {
+        this.$store.state.basketItems[event.target.name][1]--;
+        this.$store.state.counterItems--;
+        this.$store.state.totalPrice -=
+          this.currentArr[event.target.name][2].regular_price.value;
+      }
     },
   },
+  //TODO: нужно сделать отслеживание изменений в basketItems
   created() {
-    this.$store.state.basketItems = this.$store.state.basketItems.filter(
-      (el) => el[1] != 0
-    );
+    console.log(typeof this.$store.state.basketItems);
+    this.$store.state.basketItems.forEach((el) => {
+      if (el.length > 2) {
+        this.currentArr.push(el);
+      }
+    });
+    console.log(this.currentArr);
+    // this.$store.state.basketItems = this.$store.state.basketItems.filter(
+    //   (el) => el[1] != 0
+    // );
     this.catalog = [...catalogList];
   },
 };

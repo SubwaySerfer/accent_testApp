@@ -32,13 +32,18 @@ export default {
     };
   },
   methods: {
+    // действует добавление, после перехода, уже фильтруется массив
     addItem() {
       this.$store.state.basketItems[event.target.name - 1][1]++;
-      console.log(event.target);
+      // console.log(event.target);
 
       this.$store.state.basketItems[event.target.name - 1][2] =
         this.currentList.find((el) => el.id == event.target.name);
       this.$store.state.counterItems += 1;
+      this.$store.state.totalPrice +=
+        this.$store.state.basketItems[
+          event.target.name - 1
+        ][2].regular_price.value;
     },
   },
   created() {
