@@ -12,25 +12,28 @@
           :name="value.id"
           :id="value.id"
           class="brands-filter_inp"
+          :value="value.id"
+          v-model="currentFilters"
         />
         <label class="brands-filter_label" :for="value.id">{{
           value.title
         }}</label>
       </li>
     </ul>
-    <button class="btn btn-get">Применить</button>
+    <button class="btn btn-get" @click="useFilters">Применить</button>
     <div class="refresh-content">
-      <div class="btn-refresh_across">
+      <div class="btn-refresh_across" @click="delFilters">
         <span class="btn-refresh_across_top"></span>
         <span class="btn-refresh_across_bot"></span>
       </div>
-      <a class="btn-refresh">Сбросить</a>
+      <a class="btn-refresh" @click="delFilters">Сбросить</a>
     </div>
   </div>
 </template>
 
 <script>
 import brands from '@/assets/json/brands.json';
+// import { watch } from 'vue';
 
 export default {
   name: 'AcvFilterBrands',
@@ -42,10 +45,26 @@ export default {
     };
   },
 
-  methods: {},
+  methods: {
+    // checked() {
+    //   console.log(event.target);
+    // },
+    useFilters() {
+      console.log(this.currentFilters);
+    },
+    delFilters() {
+      this.currentFilters = [];
+    },
+  },
   created() {
     this.catalog = [...brands];
   },
+  // watch(){
+  //  ()=>{useFilter{
+  //     console.log(event);
+  //     console.log(this.currentFilters);
+  //   }}
+  // }
 };
 </script>
 

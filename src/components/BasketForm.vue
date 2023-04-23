@@ -2,7 +2,7 @@
   <section class="basket-info-wrapper">
     <div class="basket-total">
       <h5>Сумма:</h5>
-      <span v-text="+this.$store.state.totalPrice.toFixed(2)"></span>
+      <span v-text="+this.$store.state.totalPrice.toFixed(2) + '$'"></span>
     </div>
     <form action="" class="basket-form">
       <label for="">Имя</label><input type="text" placeholder="Введите имя" />
