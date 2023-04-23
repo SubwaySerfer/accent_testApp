@@ -44,7 +44,7 @@
           >
             удалить
           </button>
-          {{ value }}
+          <!-- {{ value }} -->
         </div>
       </li>
     </ul>
@@ -64,20 +64,56 @@ export default {
       // price: this.$store.state.basketItems[event.target.name - 1],
     };
   },
+  // watch: {
+  //   totalPrice(newTotal, oldTotal) {
+  //     console.log('total', newTotal, oldTotal);
+  //     console.log(this.$store.state.totalPrice);
+  //   },
+  // },
   methods: {
+    refreshArray() {
+      this.$store.state.basketItems.forEach((el, idx) => {
+        if (el.length > 2) {
+          // this.currentArr.push(el);
+
+          this.currentArr.find((elem) => elem[2].id == el[2].id)[1] =
+            this.$store.state.basketItems[idx][1];
+          // console.log(this.$store.state.basketItems[idx][1]);
+          // console.log(this.currentArr);
+          // console.log('ssss', this.currentArr);
+          // console.log(this.currentArr);
+          // console.log(
+          //   this.currentArr.find((el) => {
+          //     el[2].id == '2';
+          //   })
+          // );
+          // console.log(
+          //   this.currentArr.filter((elem) => {
+          //     elem[2].id == el[2].id;
+          //   })
+          // );
+        }
+      });
+    },
     addItem() {
       // console.log(event.target.name);
 
-      console.log(this.$store.state.basketItems[event.target.name - 1]);
+      // console.log(this.$store.state.basketItems[event.target.name - 1]);
       // this.$store.state.basketItems[event.target.name - 1][1]++;
       // this.$store.state.basketItems[event.target.name][1]++;
       // this.$store.state.counterItems++;
       // this.$store.state.totalPrice +=
       //   this.$store.state.basketItems[event.target.name][2].regular_price.value;
-      this.$store.state.basketItems[event.target.name][1]++;
+      this.$store.state.basketItems[event.target.name - 1][1]++;
       this.$store.state.counterItems++;
       this.$store.state.totalPrice +=
-        this.currentArr[event.target.name][2].regular_price.value;
+        this.currentArr[event.target.name - 1][2].regular_price.value;
+      // console.log(
+      //   'add',
+      //   this.$store.state.basketItems[event.target.name],
+      //   event.target.name
+      // );
+      this.refreshArray();
     },
     delItem() {
       console.log(this.$store.state.basketItems);
@@ -90,23 +126,23 @@ export default {
       //       event.target.name - 1
       //     ][2].regular_price.value;
       // }
-      if (this.$store.state.basketItems[event.target.name][1] > 0) {
-        this.$store.state.basketItems[event.target.name][1]--;
+      if (this.$store.state.basketItems[event.target.name - 1][1] > 0) {
+        this.$store.state.basketItems[event.target.name - 1][1]--;
         this.$store.state.counterItems--;
         this.$store.state.totalPrice -=
-          this.currentArr[event.target.name][2].regular_price.value;
+          this.currentArr[event.target.name - 1][2].regular_price.value;
+        this.refreshArray();
       }
     },
   },
   //TODO: нужно сделать отслеживание изменений в basketItems
   created() {
-    console.log(typeof this.$store.state.basketItems);
     this.$store.state.basketItems.forEach((el) => {
       if (el.length > 2) {
         this.currentArr.push(el);
       }
     });
-    console.log(this.currentArr);
+    // console.log(this.currentArr);
     // this.$store.state.basketItems = this.$store.state.basketItems.filter(
     //   (el) => el[1] != 0
     // );
