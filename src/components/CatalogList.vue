@@ -9,7 +9,7 @@
           Цена: {{ value.regular_price.value }}
           {{ value.regular_price.currency }}
         </h6>
-
+        {{ currentFilters }}
         <button @click="addItem" :name="value.id" class="list-item_btn btn">
           Добавить
         </button>
@@ -29,7 +29,23 @@ export default {
     return {
       list: [],
       currentList: [],
+      currentFilters: [],
     };
+  },
+  computed: {
+    todos() {
+      return this.$store.getters.getTodos;
+    },
+  },
+  watch: {
+    '$store.state.filteredItems': function () {
+      this.currentFilters = [...this.$store.state.filteredItems];
+      this.currentList = [];
+
+      this.currentFilters.forEach((el) => {
+        this.currentList.push(this.list.find((elem) => elem.brand == el));
+      });
+    },
   },
   methods: {
     // действует добавление, после перехода, уже фильтруется массив
@@ -38,11 +54,7 @@ export default {
 
       this.$store.state.basketItems[event.target.name - 1][2] =
         this.currentList.find((el) => el.id == event.target.name);
-      // this.$store.state.counterItems += 1;
-      // this.$store.state.totalPrice +=
-      //   this.$store.state.basketItems[
-      //     event.target.name - 1
-      //   ][2].regular_price.value;
+
       this.checkCounter();
     },
     //TODO: сделать функцию глобальной есть повтор
@@ -54,6 +66,7 @@ export default {
       this.$store.state.counterItems = sum;
     },
   },
+
   created() {
     this.list = [...catalogList];
     this.currentList = [...this.list.slice(0, 6)];

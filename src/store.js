@@ -6,7 +6,11 @@ const store = createStore({
       basketItems: [],
       counterItems: 0,
       totalPrice: Math.floor(0),
+      filteredItems: [],
     };
+  },
+  getters: {
+    getTodos: (state) => state.filteredItems,
   },
 });
 

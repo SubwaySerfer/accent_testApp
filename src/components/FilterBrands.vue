@@ -33,7 +33,6 @@
 
 <script>
 import brands from '@/assets/json/brands.json';
-// import { watch } from 'vue';
 
 export default {
   name: 'AcvFilterBrands',
@@ -46,11 +45,10 @@ export default {
   },
 
   methods: {
-    // checked() {
-    //   console.log(event.target);
-    // },
     useFilters() {
-      console.log(this.currentFilters);
+      // console.log(brands);
+      // console.log(this.currentFilters);
+      this.$store.state.filteredItems = this.currentFilters;
     },
     delFilters() {
       this.currentFilters = [];
@@ -92,7 +90,6 @@ export default {
   padding: 5px 0;
   gap: 5px;
   display: flex;
-  cursor: pointer;
 }
 .brands-filter_label::before {
   width: 12px;
@@ -116,6 +113,7 @@ export default {
 } */
 .brands-filter_label {
   position: relative;
+  cursor: pointer;
 }
 
 .brands-filter_inp {
