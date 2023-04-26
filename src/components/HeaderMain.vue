@@ -49,4 +49,9 @@ export default {
   align-items: center;
   gap: 5px;
 }
+@media (max-width: 1000px) {
+  .header {
+    padding: 0 4rem;
+  }
+}
 </style>

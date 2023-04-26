@@ -28,6 +28,23 @@ export default {
   justify-content: center;
   gap: 2rem;
   padding-top: 2rem;
-  
+}
+@media (max-width: 1000px) {
+  .catalog-wrapper {
+    justify-content: flex-start;
+    margin-left: 2.5rem;
+    gap: 0;
+  }
+}
+@media (max-width: 740px) {
+  .catalog-wrapper {
+    gap: 5px;
+  }
+}
+@media (max-width: 560px) {
+  .catalog-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 </style>

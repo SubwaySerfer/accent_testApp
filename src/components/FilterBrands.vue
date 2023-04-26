@@ -167,4 +167,10 @@ export default {
   left: -1;
   transform: rotate(45deg);
 }
+@media (max-width: 560px) {
+  .brands-wrapper {
+    height: auto;
+    padding-bottom: 5px;
+  }
+}
 </style>

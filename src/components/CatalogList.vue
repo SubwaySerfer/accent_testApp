@@ -186,4 +186,27 @@ export default {
   height: 16px;
   cursor: pointer;
 }
+
+@media (max-width: 1000px) {
+  /* .wrapper {
+    width: auto;
+  } */
+  /* .catalog-wrapper {
+    gap: 0rem;
+  } */
+  .catalog-list {
+    width: auto;
+  }
+}
+@media (max-width: 740px) {
+  .catalog-list {
+    gap: 10px;
+    height: auto;
+  }
+}
+@media (max-width: 406px) {
+  .list-container {
+    flex: 2 0 99%;
+  }
+}
 </style>

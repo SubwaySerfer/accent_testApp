@@ -52,6 +52,12 @@ ul {
   overflow: hidden;
   /* justify-content: center; */
 }
+@media (max-width: 740px) {
+  .main-wrapper {
+    overflow: auto;
+    margin-bottom: 2rem;
+  }
+}
 /* .router-wrapper {
   grid-area: 2 / 1 / end / end;
   display: flex;
