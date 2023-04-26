@@ -93,9 +93,6 @@ export default {
       this.$store.state.totalPrice = priceSum;
     },
     addItem() {
-      console.log(
-        this.$store.state.basketItems[event.target.name - 1][2].regular_price
-      );
       this.$store.state.basketItems[event.target.name - 1][1]++;
       // this.$store.state.totalPrice +=
       //   this.currentArr[event.target.name - 1][2].regular_price.value;

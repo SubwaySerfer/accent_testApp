@@ -24,10 +24,11 @@
     <button class="btn btn-pay" type="submit" @click="submitHandler">
       <span>Оформить заказ</span>
     </button>
-    <div class="modal-wrapper">
+    <div class="modal-wrapper" :class="{ 'modal-invisible': !isModal }">
       <div class="modal-window">
         <h3 class="modal-window_txt">Заказ оформлен!</h3>
-        <figure class="modal-window_across" @click="isModal">
+
+        <figure class="modal-window_across" @click="toggleModal">
           <span class="cross-top"></span>
           <span class="cross-bot"></span>
         </figure>
@@ -46,6 +47,7 @@ export default {
       phone: '',
       isValid: false,
       isValidPhone: false,
+      isModal: false,
     };
   },
   watch: {
@@ -59,9 +61,6 @@ export default {
   methods: {
     submitHandler() {
       if (this.isValid == true && this.isValidPhone == true) {
-        // console.log('true submit');
-        // console.log(JSON.stringify(this.nameClient));
-
         let data = { clientName: this.nameClient, clientPhone: this.phone };
         fetch('https://app.aaccent.su/js/confirm.php', {
           method: 'POST',
@@ -71,10 +70,7 @@ export default {
           body: JSON.stringify(data),
         }).then((response) => {
           if (response.ok) {
-            // this.isValid = false;
-            // this.isValidPhone = false;
-            // this.phone = '';
-            // this.nameClient = '';
+            this.isModal = true;
           } else {
             console.log('error');
           }
@@ -100,8 +96,21 @@ export default {
         this.isValidPhone = false;
       }
     },
-    //TODO: close modal
-    isModal() {},
+
+    //close modal & reset all data
+    toggleModal() {
+      this.isModal = !this.isModal;
+      this.isValid = false;
+      this.isValidPhone = false;
+      this.phone = '';
+      this.nameClient = '';
+
+      this.$router.push('main');
+      this.$store.state.counterItems = 0;
+      this.$store.state.totalPrice = 0;
+      this.$store.state.basketItems = [];
+      this.$store.state.filteredItems = [];
+    },
   },
 };
 </script>
@@ -205,5 +214,8 @@ input {
   position: relative;
   justify-self: center;
   cursor: pointer;
+}
+.modal-invisible {
+  display: none;
 }
 </style>
