@@ -24,6 +24,15 @@
     <button class="btn btn-pay" type="submit" @click="submitHandler">
       <span>Оформить заказ</span>
     </button>
+    <div class="modal-wrapper">
+      <div class="modal-window">
+        <h3 class="modal-window_txt">Заказ оформлен!</h3>
+        <figure class="modal-window_across" @click="isModal">
+          <span class="cross-top"></span>
+          <span class="cross-bot"></span>
+        </figure>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -50,51 +59,27 @@ export default {
   methods: {
     submitHandler() {
       if (this.isValid == true && this.isValidPhone == true) {
-        console.log('true submit');
-        console.log(JSON.stringify(this.nameClient));
-        // this.isValid = false;
-        // this.isValidPhone = false;
-        // this.phone = '';
-        // this.nameClient = '';
+        // console.log('true submit');
+        // console.log(JSON.stringify(this.nameClient));
+
+        let data = { clientName: this.nameClient, clientPhone: this.phone };
+        fetch('https://app.aaccent.su/js/confirm.php', {
+          method: 'POST',
+          // headers: {
+          //   'Content-Type': 'application/json',
+          // },
+          body: JSON.stringify(data),
+        }).then((response) => {
+          if (response.ok) {
+            // this.isValid = false;
+            // this.isValidPhone = false;
+            // this.phone = '';
+            // this.nameClient = '';
+          } else {
+            console.log('error');
+          }
+        });
       }
-      fetch('https://app.aaccent.su/js/confirm.php', {
-        method: 'POST',
-        // headers: {
-        //   'Content-Type': 'application/json',
-        // },
-        body: JSON.stringify(this.nameClient),
-      }).then((response) => {
-        console.log(response.json());
-      });
-
-      //   fetch('https://sergeyem.ru', {
-      //     method: 'POST',
-
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //     },
-
-      //     body: JSON.stringify({
-      //       name: this.nameClient,
-
-      //       // rating: this.rating,
-      //     }),
-      //   })
-      //     .then((response) => {
-      //       /* eslint-disable no-console */
-
-      //       console.log(response);
-
-      //       /* eslint-enable no-console */
-      //     })
-
-      //     .catch((error) => {
-      //       /* eslint-disable no-console */
-
-      //       console.log(error);
-
-      //       /* eslint-enable no-console */
-      //     });
     },
 
     validateName() {
@@ -115,6 +100,8 @@ export default {
         this.isValidPhone = false;
       }
     },
+    //TODO: close modal
+    isModal() {},
   },
 };
 </script>
@@ -169,5 +156,54 @@ input {
 
 .valid-name {
   border: 2px solid green;
+}
+.modal-wrapper {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+}
+.modal-window {
+  width: 30rem;
+  align-self: center;
+  background: #75d5ce;
+  height: 20rem;
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  grid-template-columns: repeat(6, 1fr) 30px;
+}
+.modal-window_txt {
+  grid-area: 1 / 1 / end/ end;
+  align-self: center;
+  justify-self: center;
+  font-size: 1.8rem;
+}
+
+.cross-top {
+  width: 10px;
+  height: 1px;
+  background-color: black;
+  display: block;
+  position: absolute;
+  transform: rotate(135deg);
+}
+.cross-bot {
+  width: 10px;
+  height: 1px;
+  display: block;
+  background-color: black;
+  position: absolute;
+  transform: rotate(45deg);
+}
+.modal-window_across {
+  grid-area: 1 / 7 /2 / 8;
+  position: relative;
+  justify-self: center;
+  cursor: pointer;
 }
 </style>
