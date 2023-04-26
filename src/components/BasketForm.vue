@@ -10,6 +10,7 @@
         type="text"
         placeholder="Введите имя"
         @input="validateName"
+        v-model="nameClient"
         :class="{ 'valid-name': isValid, 'invalid-name': !isValid }"
       />
       <label for="">Телефон</label>
@@ -20,7 +21,7 @@
         :class="{ 'valid-name': isValidPhone, 'invalid-name': !isValidPhone }"
       />
     </form>
-    <button class="btn btn-pay" type="submit">
+    <button class="btn btn-pay" type="submit" @click="submitHandler">
       <span>Оформить заказ</span>
     </button>
   </section>
@@ -32,6 +33,7 @@ export default {
 
   data() {
     return {
+      nameClient: '',
       phone: '',
       isValid: false,
       isValidPhone: false,
@@ -46,7 +48,54 @@ export default {
     },
   },
   methods: {
-    submitHandler() {},
+    submitHandler() {
+      if (this.isValid == true && this.isValidPhone == true) {
+        console.log('true submit');
+        console.log(JSON.stringify(this.nameClient));
+        // this.isValid = false;
+        // this.isValidPhone = false;
+        // this.phone = '';
+        // this.nameClient = '';
+      }
+      fetch('https://app.aaccent.su/js/confirm.php', {
+        method: 'POST',
+        // headers: {
+        //   'Content-Type': 'application/json',
+        // },
+        body: JSON.stringify(this.nameClient),
+      }).then((response) => {
+        console.log(response.json());
+      });
+
+      //   fetch('https://sergeyem.ru', {
+      //     method: 'POST',
+
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //     },
+
+      //     body: JSON.stringify({
+      //       name: this.nameClient,
+
+      //       // rating: this.rating,
+      //     }),
+      //   })
+      //     .then((response) => {
+      //       /* eslint-disable no-console */
+
+      //       console.log(response);
+
+      //       /* eslint-enable no-console */
+      //     })
+
+      //     .catch((error) => {
+      //       /* eslint-disable no-console */
+
+      //       console.log(error);
+
+      //       /* eslint-enable no-console */
+      //     });
+    },
 
     validateName() {
       let val = event.target.value;
@@ -58,19 +107,12 @@ export default {
     },
 
     validatePhone(value) {
-      //TODO: доделать валидатор форм
+      //TODO: доделать валидатор форм (не хватает сообщений об ошибках)
       let testSymbols = /^[\d\+][\d\(\)\ -]{10,14}\d$/; // eslint-disable-line
       if (testSymbols.test(value)) {
         this.isValidPhone = true;
-        // console.log(true);
-
-        // this.msg['email'] = '';
-        // this.disabled = [false, this.disabled[1]];
       } else {
         this.isValidPhone = false;
-        // console.log(false);
-        // this.msg['email'] = 'Invalid Email Address';
-        // this.disabled = [true, this.disabled[1]];
       }
     },
   },
@@ -79,6 +121,10 @@ export default {
 
 <style></style>
 <style scoped>
+input {
+  border-radius: 5px;
+  padding-left: 5px;
+}
 .basket-info-wrapper {
   display: flex;
   width: 22rem;
@@ -118,9 +164,10 @@ export default {
 }
 
 .invalid-name {
-  border: 1px solid red;
+  border: 2px solid red;
 }
+
 .valid-name {
-  border: 1px solid green;
+  border: 2px solid green;
 }
 </style>
