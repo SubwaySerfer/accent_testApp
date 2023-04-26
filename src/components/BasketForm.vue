@@ -4,12 +4,25 @@
       <h5>Сумма:</h5>
       <span v-text="+this.$store.state.totalPrice.toFixed(2) + '$'"></span>
     </div>
-    <form action="" class="basket-form">
-      <label for="">Имя</label><input type="text" placeholder="Введите имя" />
+    <form action="" class="basket-form" @submit.prevent="submitHandler">
+      <label for="">Имя</label
+      ><input
+        type="text"
+        placeholder="Введите имя"
+        @input="validateName"
+        :class="{ 'valid-name': isValid, 'invalid-name': !isValid }"
+      />
       <label for="">Телефон</label>
-      <input type="tel" placeholder="+7(999)-999-99-99" v-model="phone" />
+      <input
+        type="tel"
+        placeholder="+7(999)-999-99-99"
+        v-model="phone"
+        :class="{ 'valid-name': isValidPhone, 'invalid-name': !isValidPhone }"
+      />
     </form>
-    <button class="btn btn-pay"><span>Оформить заказ</span></button>
+    <button class="btn btn-pay" type="submit">
+      <span>Оформить заказ</span>
+    </button>
   </section>
 </template>
 
@@ -20,23 +33,42 @@ export default {
   data() {
     return {
       phone: '',
+      isValid: false,
+      isValidPhone: false,
     };
   },
   watch: {
     phone(value) {
       this.validatePhone(value);
     },
+    name(value) {
+      this.validateName(value);
+    },
   },
   methods: {
+    submitHandler() {},
+
+    validateName() {
+      let val = event.target.value;
+      if (val.length >= 3 && val.length < 15) {
+        this.isValid = true;
+      } else {
+        this.isValid = false;
+      }
+    },
+
     validatePhone(value) {
       //TODO: доделать валидатор форм
       let testSymbols = /^[\d\+][\d\(\)\ -]{10,14}\d$/; // eslint-disable-line
       if (testSymbols.test(value)) {
-        console.log(true);
+        this.isValidPhone = true;
+        // console.log(true);
+
         // this.msg['email'] = '';
         // this.disabled = [false, this.disabled[1]];
       } else {
-        console.log(false);
+        this.isValidPhone = false;
+        // console.log(false);
         // this.msg['email'] = 'Invalid Email Address';
         // this.disabled = [true, this.disabled[1]];
       }
@@ -83,5 +115,12 @@ export default {
   background: #98c9c5;
   box-sizing: border-box;
   color: #fff;
+}
+
+.invalid-name {
+  border: 1px solid red;
+}
+.valid-name {
+  border: 1px solid green;
 }
 </style>
