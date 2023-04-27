@@ -56,6 +56,7 @@ ul {
   .main-wrapper {
     overflow: auto;
     margin-bottom: 2rem;
+    height: auto;
   }
 }
 /* .router-wrapper {
