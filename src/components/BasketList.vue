@@ -54,7 +54,6 @@ import catalogList from '@/assets/json/products.json';
 
 export default {
   name: 'AcvBasketList',
-  //TODO: убрать прокрутку модального окна
 
   data() {
     return {
@@ -198,29 +197,5 @@ export default {
 }
 .btn {
   height: 2.5rem;
-}
-@media (max-width: 1030px) {
-  .basket-card {
-    gap: 8px;
-  }
-}
-@media (max-width: 670px) {
-  .basket-items {
-    padding: 0;
-  }
-}
-@media (max-width: 350px) {
-  .basket-card {
-    gap: 3px;
-  }
-  .btn {
-    width: 60px;
-    font-size: 1.2rem;
-    text-align: start;
-    font-weight: 400;
-  }
-  .basket-card_count_inp {
-    width: 20px;
-  }
 }
 </style>

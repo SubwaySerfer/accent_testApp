@@ -61,18 +61,7 @@ export default {
   methods: {
     submitHandler() {
       if (this.isValid == true && this.isValidPhone == true) {
-        console.log(this.$store.state.basketItems);
-
-        let data = {
-          clientName: this.nameClient,
-          clientPhone: this.phone,
-          clientsBasket: [],
-        };
-        this.$store.state.basketItems.forEach((el) => {
-          if (el.length > 2) {
-            data.clientsBasket.push([el[2].title, el[1]]);
-          }
-        });
+        let data = { clientName: this.nameClient, clientPhone: this.phone };
         fetch('https://app.aaccent.su/js/confirm.php', {
           method: 'POST',
           // headers: {
@@ -228,18 +217,5 @@ input {
 }
 .modal-invisible {
   display: none;
-}
-@media (max-width: 800px) {
-  .basket-info-wrapper {
-    width: 16rem;
-  }
-}
-@media (max-width: 620px) {
-  /* .basket-info-wrapper {
-    margin-top: 140px;
-  } */
-  .basket-info-wrapper {
-    width: auto;
-  }
 }
 </style>

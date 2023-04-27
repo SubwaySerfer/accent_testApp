@@ -40,18 +40,4 @@ export default {
   gap: 2rem;
   padding-top: 2rem;
 }
-@media (max-width: 1035px) {
-  .basket-wrapper {
-    gap: 1rem;
-    width: auto;
-  }
-}
-@media (max-width: 620px) {
-  .basket-wrapper {
-    flex-direction: column-reverse;
-    align-items: center;
-    height: auto;
-    justify-content: end;
-  }
-}
 </style>
